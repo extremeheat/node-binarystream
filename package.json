@@ -1,7 +1,7 @@
 {
-  "name": "prismarine-template",
+  "name": "binarystream",
   "version": "1.0.0",
-  "description": "A template repository to make it easy to create new prismarine repo",
+  "description": "Simple binary byte stream implementation with support for reading/writing numbers, strings, and varints (zigzag or unsigned) in both little and big endian encoding",
   "main": "index.js",
   "scripts": {
     "test": "mocha --reporter spec --exit",
@@ -11,20 +11,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PrismarineJS/prismarine-template.git"
+    "url": "git+https://github.com/extremeheat/node-binarystream.git"
   },
   "keywords": [
-    "prismarine",
-    "template"
+    "binary stream",
+    "byte stream"
   ],
-  "author": "Romain Beaumont",
+  "author": "extremeheat",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/PrismarineJS/prismarine-template/issues"
+    "url": "https://github.com/extremeheat/node-binarystream/issues"
   },
-  "homepage": "https://github.com/PrismarineJS/prismarine-template#readme",
+  "homepage": "https://github.com/extremeheat/node-binarystream#readme",
   "devDependencies": {
-    "prismarine-template": "file:.",
+    "binarystream": "file:.",
     "standard": "^17.0.0",
     "mocha": "^10.0.0"
   }
