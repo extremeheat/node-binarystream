@@ -252,22 +252,24 @@ class ByteStream {
 
   // Strings
   writeStringNT (value, encoding = 'utf8') {
-    this.resizeForWriteIfNeeded(value.length + 1)
+    const byteLength = Buffer.byteLength(value, encoding) + 1
+    this.resizeForWriteIfNeeded(byteLength)
     this.buffer.write(value, this.writeOffset, value.length, encoding)
     this.buffer[this.writeOffset + value.length] = 0 // Null terminator
     this.writeOffset += value.length + 1
   }
 
   writeStringRaw (value, encoding = 'utf8') {
-    this.resizeForWriteIfNeeded(value.length)
+    const byteLength = Buffer.byteLength(value, encoding)
+    this.resizeForWriteIfNeeded(byteLength)
     this.buffer.write(value, this.writeOffset, value.length, encoding)
-    this.writeOffset += value.length
+    this.writeOffset += byteLength
   }
 
   writeBuffer (value) {
-    this.resizeForWriteIfNeeded(value.length)
+    this.resizeForWriteIfNeeded(value.byteLength)
     value.copy(this.buffer, this.writeOffset)
-    this.writeOffset += value.length
+    this.writeOffset += value.byteLength
   }
 
   readBuffer (length) {
