@@ -26,4 +26,4 @@ console.assert(buffer.equals(Buffer.from('hello world!\0'))
 See the [typescript types here for the full API](https://github.com/extremeheat/node-binarystream/blob/master/index.js)
 
 ## License
-
+MIT
