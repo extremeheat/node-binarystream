@@ -1,4 +1,4 @@
-const ByteStream = require('binarystream')
+const ByteStream = require('bytewriter')
 const stream = new ByteStream()
 stream.writeStringNT('hello world!')
 

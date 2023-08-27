@@ -1,4 +1,4 @@
-declare module "bytestream" {
+declare module "bytewriter" {
   class ByteStream {
     private buffer: Buffer;
     private maxSize: number;

@@ -1,5 +1,5 @@
 {
-  "name": "binarystream",
+  "name": "bytewriter",
   "version": "1.0.0",
   "description": "Simple binary byte stream implementation with support for reading/writing numbers, strings, and varints (zigzag or unsigned) in both little and big endian encoding",
   "main": "index.js",
@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/extremeheat/node-binarystream#readme",
   "devDependencies": {
-    "binarystream": "file:.",
+    "bytewriter": "file:.",
     "standard": "^17.0.0",
     "mocha": "^10.0.0"
   }

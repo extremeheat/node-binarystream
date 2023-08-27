@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 const assert = require('assert')
-const ByteStream = require('binarystream')
+const ByteStream = require('bytewriter')
 
 describe('basic tests', () => {
   it('NT string writing', () => {
