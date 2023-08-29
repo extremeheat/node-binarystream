@@ -53,7 +53,7 @@ class ByteStream {
         break
       case 'number':
         this.buffer.writeUInt32LE(value & 0xffffffff, this.writeOffset)
-        this.buffer.writeUInt32LE(value >>> 32, this.writeOffset + 4)
+        this.buffer.writeUInt32LE(Math.floor(value / 4294967296), this.writeOffset + 4)
         break
       default:
         throw new Error('Invalid value type')
@@ -93,7 +93,7 @@ class ByteStream {
         this.buffer.writeBigUInt64BE(value, this.writeOffset)
         break
       case 'number':
-        this.buffer.writeUInt32BE(value >>> 32, this.writeOffset)
+        this.buffer.writeUInt32BE(Math.floor(value / 4294967296), this.writeOffset)
         this.buffer.writeUInt32BE(value & 0xffffffff, this.writeOffset + 4)
         break
       default:
@@ -131,7 +131,7 @@ class ByteStream {
         break
       case 'number':
         this.buffer.writeInt32LE(value & 0xffffffff, this.writeOffset)
-        this.buffer.writeInt32LE(value >>> 32, this.writeOffset + 4)
+        this.buffer.writeInt32LE(Math.floor(value / 4294967296), this.writeOffset + 4)
         break
       default:
         throw new Error('Invalid value type')
@@ -159,7 +159,7 @@ class ByteStream {
         this.buffer.writeBigInt64BE(value, this.writeOffset)
         break
       case 'number':
-        this.buffer.writeInt32BE(value >>> 32, this.writeOffset)
+        this.buffer.writeInt32BE(Math.floor(value / 4294967296), this.writeOffset)
         this.buffer.writeInt32BE(value & 0xffffffff, this.writeOffset + 4)
         break
       default:
