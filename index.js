@@ -309,6 +309,7 @@ class ByteStream {
 
   // Write a signed 64-bit varint
   writeVarLong (value) {
+    value = typeof value === 'bigint' ? value : BigInt(value)
     this.resizeForWriteIfNeeded(9)
     let offset = 0
     while (value >= 0x80n) {
@@ -348,6 +349,7 @@ class ByteStream {
 
   // Write a zigzag encoded, signed varint upto 64bits
   writeZigZagVarLong (value) {
+    value = typeof value === 'bigint' ? value : BigInt(value)
     const zigzag = (value << 1n) ^ (value >> 63n)
     this.writeVarLong(zigzag)
   }
