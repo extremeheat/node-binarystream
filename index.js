@@ -328,7 +328,7 @@ class ByteStream {
     let byte
     do {
       byte = BigInt(this.buffer[this.readOffset + offset])
-      value |= (byte & 0x7f) << BigInt(7 * offset)
+      value |= (byte & 0x7fn) << BigInt(7 * offset)
       offset += 1
     } while (byte & 0x80n)
     this.readOffset += Number(offset)
