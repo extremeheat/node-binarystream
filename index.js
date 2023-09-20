@@ -357,7 +357,7 @@ class ByteStream {
 
   // Read a zigzag encoded, signed varint upto 64bits
   readZigZagVarLong () {
-    const value = this.readVarInt()
+    const value = this.readVarLong()
     return (value >>> 1n) ^ -(value & 1n)
   }
 
