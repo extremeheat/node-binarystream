@@ -311,10 +311,11 @@ class ByteStream {
   writeVarLong (value) {
     value = typeof value === 'bigint' ? value : BigInt(value)
     this.resizeForWriteIfNeeded(9)
+    value = BigInt.asUintN(64, value)
     let offset = 0
     while (value & ~0x7Fn) {
       this.buffer[this.writeOffset + offset] = Number((value & 0x7fn) | 0x80n)
-      value = value >>> 7n
+      value = value >> 7n
       offset += 1
     }
     this.buffer[this.writeOffset + offset] = Number(value)
