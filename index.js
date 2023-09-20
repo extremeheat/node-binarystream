@@ -284,7 +284,7 @@ class ByteStream {
   writeVarInt (value) {
     this.resizeForWriteIfNeeded(9)
     let offset = 0
-    while (value >= 0x80) {
+    while (value & ~0x7F) {
       this.buffer[this.writeOffset + offset] = (value & 0x7f) | 0x80
       value = value >>> 7
       offset += 1
@@ -312,7 +312,7 @@ class ByteStream {
     value = typeof value === 'bigint' ? value : BigInt(value)
     this.resizeForWriteIfNeeded(9)
     let offset = 0
-    while (value >= 0x80n) {
+    while (value & ~0x7Fn) {
       this.buffer[this.writeOffset + offset] = Number((value & 0x7fn) | 0x80n)
       value = value >>> 7n
       offset += 1
@@ -327,11 +327,11 @@ class ByteStream {
     let offset = 0
     let byte
     do {
-      byte = BigInt(this.buffer[this.readOffset + offset])
-      value |= (byte & 0x7fn) << BigInt(7 * offset)
+      byte = this.buffer[this.readOffset + offset]
+      value |= BigInt(byte & 0x7f) << BigInt(7 * offset)
       offset += 1
-    } while (byte & 0x80n)
-    this.readOffset += Number(offset)
+    } while (byte & 0x80)
+    this.readOffset += offset
     return value
   }
 
