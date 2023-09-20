@@ -313,11 +313,11 @@ class ByteStream {
     this.resizeForWriteIfNeeded(9)
     let offset = 0
     while (value >= 0x80n) {
-      this.buffer[this.writeOffset + offset] = (value & 0x7fn) | 0x80n
+      this.buffer[this.writeOffset + offset] = Number((value & 0x7fn) | 0x80n)
       value = value >>> 7n
       offset += 1
     }
-    this.buffer[this.writeOffset + offset] = value
+    this.buffer[this.writeOffset + offset] = Number(value)
     this.writeOffset += offset + 1
   }
 
