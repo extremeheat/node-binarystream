@@ -13,12 +13,22 @@ npm install bytewriter
 
 ## Usage
 
+Simple example to create a new empty Buffer stream:
+
 ```js
 const ByteStream = require('bytewriter')
 const stream = new ByteStream()
 stream.writeStringNT("hello world!") // write a string with a null term at end
 const buffer = stream.getBuffer()
 console.assert(buffer.equals(Buffer.from('hello world!\0'))
+```
+
+Load an existing one:
+```js
+const BinaryStream = require('bytewriter')
+const stream = new BinaryStream(Buffer.from('10 10 10', 'hex'))
+const a = stream.readUInt8()
+const b = stream.readUInt16()
 ```
 
 ## API

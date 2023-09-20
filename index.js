@@ -280,10 +280,11 @@ class ByteStream {
 
   // Varints
 
+  // Write a signed varint
   writeVarInt (value) {
     this.resizeForWriteIfNeeded(9)
     let offset = 0
-    while (value >= 0x80) {
+    while (value & ~0x7F) {
       this.buffer[this.writeOffset + offset] = (value & 0x7f) | 0x80
       value = value >>> 7
       offset += 1
@@ -292,6 +293,7 @@ class ByteStream {
     this.writeOffset += offset + 1
   }
 
+  // Read a signed varint
   readVarInt () {
     let value = 0
     let offset = 0
@@ -305,49 +307,58 @@ class ByteStream {
     return value
   }
 
+  // Write a signed 64-bit varint
   writeVarLong (value) {
+    value = typeof value === 'bigint' ? value : BigInt(value)
     this.resizeForWriteIfNeeded(9)
+    value = BigInt.asUintN(64, value)
     let offset = 0
-    while (value >= 0x80n) {
-      this.buffer[this.writeOffset + offset] = (value & 0x7fn) | 0x80n
-      value = value >>> 7n
+    while (value & ~0x7Fn) {
+      this.buffer[this.writeOffset + offset] = Number((value & 0x7fn) | 0x80n)
+      value = value >> 7n
       offset += 1
     }
-    this.buffer[this.writeOffset + offset] = value
+    this.buffer[this.writeOffset + offset] = Number(value)
     this.writeOffset += offset + 1
   }
 
+  // Read a signed 64-bit varint
   readVarLong () {
     let value = 0n
-    let offset = 0n
+    let offset = 0
     let byte
     do {
       byte = this.buffer[this.readOffset + offset]
-      value |= (byte & 0x7fn) << (7n * offset)
-      offset += 1n
-    } while (byte & 0x80n)
-    this.readOffset += Number(offset)
-    return value
+      value |= BigInt(byte & 0x7f) << BigInt(7 * offset)
+      offset += 1
+    } while (byte & 0x80)
+    this.readOffset += offset
+    return BigInt.asIntN(64, value)
   }
 
+  // Write a zigzag encoded, signed varint upto 32bits
   writeZigZagVarInt (value) {
     const zigzag = (value << 1) ^ (value >> 31)
     this.writeVarInt(zigzag)
   }
 
+  // Read a zigzag encoded, signed varint upto 32bits
   readZigZagVarInt () {
     const value = this.readVarInt()
     return (value >>> 1) ^ -(value & 1)
   }
 
-  writeZigZagVarlong (value) {
+  // Write a zigzag encoded, signed varint upto 64bits
+  writeZigZagVarLong (value) {
+    value = typeof value === 'bigint' ? value : BigInt(value)
     const zigzag = (value << 1n) ^ (value >> 63n)
-    this.writeVarlong(zigzag)
+    this.writeVarLong(zigzag)
   }
 
-  readZigZagVarlong () {
-    const value = this.readVarInt()
-    return (value >>> 1n) ^ -(value & 1n)
+  // Read a zigzag encoded, signed varint upto 64bits
+  readZigZagVarLong () {
+    const value = this.readVarLong()
+    return (value >> 1n) ^ -(value & 1n)
   }
 
   // Extra

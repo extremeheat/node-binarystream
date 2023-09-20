@@ -89,21 +89,30 @@ declare module "bytewriter" {
     readBuffer(length: number): Buffer
 
     // Varints
+    
+    // Write a signed varint
     writeVarInt(value: number): void
 
+    // Read a signed varint
     readVarInt(): void
 
+    // Write a signed 64-bit varint
     writeVarLong(value: bigint): void
 
+    // Read a signed 64-bit varint
     readVarLong(): void
 
+    // Write a zigzag encoded, signed varint upto 32bits
     writeZigZagVarInt(value: number): void
 
+    // Read a zigzag encoded, signed varint upto 32bits
     readZigZagVarInt(): number
 
-    writeZigZagVarlong(value: bigint): void
+    // Write a zigzag encoded, signed varint upto 64bits
+    writeZigZagVarLong(value: bigint): void
 
-    readZigZagVarlong(): bigint
+    // Read a zigzag encoded, signed varint upto 64bits
+    readZigZagVarLong(): bigint
 
     // Extra
     peekUInt8(): number
