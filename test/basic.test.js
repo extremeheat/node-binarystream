@@ -18,4 +18,10 @@ describe('basic tests', () => {
     stream.writeInt64LE(-1)
     assert(stream.getBuffer().equals(Buffer.from([255, 255, 255, 255, 255, 255, 255, 255])))
   })
+  it('Varints', () => {
+    const stream = new ByteStream()
+    stream.writeVarInt(1)
+    stream.writeVarLong(1n)
+    assert(stream.getBuffer().equals(Buffer.from([1, 1])))
+  })
 })
