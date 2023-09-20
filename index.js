@@ -333,7 +333,7 @@ class ByteStream {
       offset += 1
     } while (byte & 0x80)
     this.readOffset += offset
-    return value
+    return BigInt.asIntN(64, value)
   }
 
   // Write a zigzag encoded, signed varint upto 32bits
