@@ -259,6 +259,16 @@ class ByteStream {
     this.writeOffset += value.length + 1
   }
 
+  readStringNT (encoding = 'utf8') {
+    let offset = this.readOffset
+    while (this.buffer[offset] !== 0) {
+      offset++
+    }
+    const value = this.buffer.toString(encoding, this.readOffset, offset)
+    this.readOffset = offset + 1
+    return value
+  }
+
   writeStringRaw (value, encoding = 'utf8') {
     const byteLength = Buffer.byteLength(value, encoding)
     this.resizeForWriteIfNeeded(byteLength)

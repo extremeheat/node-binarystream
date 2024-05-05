@@ -220,6 +220,16 @@ class ByteStream {
     this.writeOffset += encodedString.length + 1
   }
 
+  readStringNT (encoding = 'utf8') {
+    let length = 0
+    while (this.buffer[this.readOffset + length] !== 0) {
+      length += 1
+    }
+    const value = this.buffer.subarray(this.readOffset, this.readOffset + length)
+    this.readOffset += length + 1
+    return new TextDecoder(encoding).decode(value)
+  }
+
   writeStringRaw (value, encoding = 'utf8') {
     const encoder = new TextEncoder(encoding)
     const encodedString = encoder.encode(value)

@@ -4,7 +4,7 @@
 [![Try it on gitpod](https://img.shields.io/static/v1.svg?label=try&message=on%20gitpod&color=brightgreen&logo=gitpod)](https://gitpod.io/#https://github.com/extremeheat/node-binarystream)
 [![PrismarineJS Discord](https://img.shields.io/static/v1.svg?label=PrismarineJS&message=Discord&color=blue&logo=discord)](https://discord.gg/GsEFRM8)
 
-A simple zero-dep binary byte stream implementation for Node.js with support for reading and writing numbers, strings, and varints (zigzag or unsigned) in both little and big endian encoding.
+A simple zero-dep binary byte stream implementation for Node.js and the browser with support for reading and writing numbers, strings, and varints (zigzag or unsigned) in both little and big endian encoding.
 
 ## Install
 ```js

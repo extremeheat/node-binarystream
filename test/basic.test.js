@@ -27,6 +27,7 @@ describe('basic tests - node', () => {
   it('NT string writing', () => {
     const stream = new ByteStream()
     stream.writeStringNT('hello world!')
+    assert(stream.readStringNT() === 'hello world!')
     assert(stream.getBuffer().equals(Buffer.from('hello world!\0')))
     assert(ByteWriter.buffersEqual(stream.getBuffer(), Buffer.from('hello world!\0')))
   })
@@ -74,6 +75,7 @@ describe('basic tests - browser', () => {
   it('NT string writing', () => {
     const stream = new ByteStream()
     stream.writeStringNT('hello world!')
+    assert(stream.readStringNT() === 'hello world!')
     const expected = new Uint8Array([104, 101, 108, 108, 111, 32, 119, 111, 114, 108, 100, 33, 0])
     assert(ByteWriter.buffersEqual(stream.getBuffer(), expected))
   })
