@@ -89,7 +89,7 @@ declare module "bytewriter" {
     readBuffer(length: number): Buffer
 
     // Varints
-    
+
     // Write a signed varint
     writeVarInt(value: number): void
 
@@ -120,6 +120,9 @@ declare module "bytewriter" {
     peek(): number
 
     getBuffer(): Buffer
+
+    static buffersEqual(a: ArrayBuffer, b: ArrayBuffer): boolean
+    static streamsEqual(a: ByteStream, b: ByteStream): boolean
   }
   export = ByteStream
 }

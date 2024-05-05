@@ -18,6 +18,7 @@ describe('basic tests', () => {
     stream.readUInt8(0x01)
     stream.readUInt16BE(0x0203)
     assert.strictEqual(stream.getBuffer().toString('hex'), '878c94208f9cb4e0b0c1c28408a6c8888102b6e8c881e3858b95283f9df3b63ff3c0ca4283de1b68656c6c6f20776f726c64210028292a2b2c')
+    assert(ByteWriter.streamsEqual(stream, stream))
   })
 })
 
@@ -27,6 +28,7 @@ describe('basic tests - node', () => {
     const stream = new ByteStream()
     stream.writeStringNT('hello world!')
     assert(stream.getBuffer().equals(Buffer.from('hello world!\0')))
+    assert(ByteWriter.buffersEqual(stream.getBuffer(), Buffer.from('hello world!\0')))
   })
   it('Numbers with i64', () => {
     const stream = new ByteStream()
@@ -72,7 +74,8 @@ describe('basic tests - browser', () => {
   it('NT string writing', () => {
     const stream = new ByteStream()
     stream.writeStringNT('hello world!')
-    assert(stream.getBuffer().equals(Uint8Array.from('hello world!\0'.split('').map(c => c.charCodeAt(0)))))
+    const expected = new Uint8Array([104, 101, 108, 108, 111, 32, 119, 111, 114, 108, 100, 33, 0])
+    assert(ByteWriter.buffersEqual(stream.getBuffer(), expected))
   })
   it('Numbers with i64', () => {
     const stream = new ByteStream()

@@ -334,6 +334,18 @@ class ByteStream {
   getBuffer () {
     return this.buffer.subarray(0, this.writeOffset)
   }
+
+  static buffersEqual (a, b) {
+    if (a.length !== b.length) return false
+    for (let i = 0; i < a.length; i++) {
+      if (a[i] !== b[i]) return false
+    }
+    return true
+  }
+
+  static streamsEqual (a, b) {
+    return ByteStream.buffersEqual(a.getBuffer(), b.getBuffer())
+  }
 }
 
 module.exports = ByteStream
