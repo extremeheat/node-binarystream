@@ -1,5 +1,5 @@
 const MAX_ALLOC_SIZE = 1024 * 1024 * 2 // 2MB
-const DEFAULT_ALLOC_SIZE = 10000
+const DEFAULT_ALLOC_SIZE = 10000 // 10 KB
 
 class ByteStream {
   constructor (buffer, maxSize) {
@@ -13,9 +13,9 @@ class ByteStream {
 
   resizeForWriteIfNeeded (bytes) {
     if ((this.writeOffset + bytes) > this.size) {
-      this.size *= 2
-      const allocSize = this.size - this.writeOffset
+      const allocSize = this.writeOffset
       this.buffer = Buffer.concat([this.buffer, Buffer.allocUnsafe(allocSize)])
+      this.size = this.buffer.length
     }
     // Detect potential writing bugs
     if (this.size > this.guardLimit) throw new Error('Buffer size exceeded guard limit')
@@ -285,6 +285,18 @@ class ByteStream {
   readBuffer (length) {
     const value = this.buffer.slice(this.readOffset, this.readOffset + length)
     this.readOffset += length
+    return value
+  }
+
+  readRemaining () {
+    const value = this.buffer.slice(this.readOffset)
+    this.readOffset = this.buffer.length
+    return value
+  }
+
+  readRemainingWritten () {
+    const value = this.buffer.slice(0, this.writeOffset)
+    this.readOffset = this.writeOffset
     return value
   }
 

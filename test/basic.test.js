@@ -17,6 +17,7 @@ describe('basic tests', () => {
     stream.writeBuffer(Buffer.from([0x28, 0x29, 0x2a, 0x2b, 0x2c]))
     stream.readUInt8(0x01)
     stream.readUInt16BE(0x0203)
+    console.log('Buffer[24:]', stream.readRemainingWritten(), 'total:', stream.readRemaining())
     assert.strictEqual(stream.getBuffer().toString('hex'), '878c94208f9cb4e0b0c1c28408a6c8888102b6e8c881e3858b95283f9df3b63ff3c0ca4283de1b68656c6c6f20776f726c64210028292a2b2c')
     assert(ByteWriter.streamsEqual(stream, stream))
   })

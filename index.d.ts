@@ -88,6 +88,10 @@ declare module "bytewriter" {
 
     // Return a new Buffer containing the bytes written so far
     readBuffer(length: number): Buffer
+    // Read the remaining bytes in the buffer from the current read index to end of underlying buffer
+    readRemaining(): Buffer
+    // Read the remaining bytes in the buffer from the current read index to the current write index
+    readRemainingWritten(): Buffer
 
     // Varints
 
