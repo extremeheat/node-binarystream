@@ -2,7 +2,7 @@
   "name": "bytewriter",
   "version": "1.0.2",
   "description": "Simple binary byte stream implementation with support for reading/writing numbers, strings, and varints (zigzag or unsigned) in both little and big endian encoding",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "mocha --reporter spec --exit",
     "pretest": "npm run lint",
