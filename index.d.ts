@@ -83,6 +83,7 @@ declare module "bytewriter" {
     readStringNT(encoding = 'utf8'): string
 
     writeStringRaw(value: string, encoding = 'utf8'): void
+    readStringRaw(length: number, encoding = 'utf8'): string
 
     writeBuffer(value: Buffer): void
 
