@@ -94,6 +94,9 @@ declare module "bytewriter" {
     // Read the remaining bytes in the buffer from the current read index to the current write index
     readRemainingWritten(): Buffer
 
+    readUUID(): string
+    writeUUID(uuid: string): void
+
     // Varints
 
     // Write a signed varint
