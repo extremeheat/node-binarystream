@@ -1,5 +1,8 @@
 ## History
 
+### 1.2.0
+* [Add readUUID and writeUUID BE functions](https://github.com/extremeheat/node-binarystream/commit/0016bf2a73d2235966ee81749863187389d50fde) (thanks @extremeheat)
+
 ### 1.1.0
 * [Add readStringRaw method to read string of known length](https://github.com/extremeheat/node-binarystream/commit/911b562d5ff9d9cdbc7dcc2afa8c4e8359470aba) (thanks @extremeheat)
 * [Add readRemaining and readRemainingWritten methods](https://github.com/extremeheat/node-binarystream/commit/a5a86690c9605bee1fd0020777677eb926a14b78) (thanks @extremeheat)
