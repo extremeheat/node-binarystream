@@ -43,6 +43,13 @@ describe('basic tests - node', () => {
     stream.writeInt64LE(-1)
     assert(stream.getBuffer().equals(Buffer.from([255, 255, 255, 255, 255, 255, 255, 255])))
   })
+  it('uuids', () => {
+    const stream = new ByteStream()
+    const randomUUID = globalThis.crypto.randomUUID()
+    stream.writeUUID(randomUUID)
+    const readUUID = stream.readUUID()
+    assert.strictEqual(randomUUID, readUUID)
+  })
   it('Varints', () => {
     const stream = new ByteStream()
     stream.writeVarInt(1)
@@ -93,6 +100,13 @@ describe('basic tests - browser', () => {
     stream.writeInt64LE(-1)
     assert(stream.getBuffer().equals(Uint8Array.from([255, 255, 255, 255, 255, 255, 255, 255]))
     )
+  })
+  it('uuids', () => {
+    const stream = new ByteStream()
+    const randomUUID = globalThis.crypto.randomUUID()
+    stream.writeUUID(randomUUID)
+    const readUUID = stream.readUUID()
+    assert.strictEqual(randomUUID, readUUID)
   })
   it('Varints', () => {
     const stream = new ByteStream()

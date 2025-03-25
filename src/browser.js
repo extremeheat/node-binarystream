@@ -269,6 +269,43 @@ class ByteStream {
     return value
   }
 
+  // Write a UUID as big endian (accepts string with/without dashes or Uint8Array)
+  writeUUID (uuid) {
+    this.resizeForWriteIfNeeded(16) // UUID is always 16 bytes
+
+    let bytes
+    if (uuid instanceof Uint8Array) {
+      if (uuid.length !== 16) throw new Error('UUID Uint8Array must be 16 bytes')
+      bytes = uuid
+    } else if (typeof uuid === 'string') {
+      const hex = uuid.replace(/-/g, '')
+      if (hex.length !== 32) {
+        throw new Error('Invalid UUID string format')
+      }
+      bytes = new Uint8Array(16)
+      for (let i = 0; i < 16; i++) {
+        bytes[i] = parseInt(hex.slice(i * 2, i * 2 + 2), 16)
+      }
+    } else {
+      throw new Error('UUID must be a string or Uint8Array')
+    }
+    this.buffer.set(bytes, this.writeOffset)
+    this.writeOffset += 16
+  }
+
+  // Read a UUID and return it as a string with dashes
+  readUUID () {
+    if (this.readOffset + 16 > this.buffer.length) {
+      throw new Error('Not enough bytes to read UUID')
+    }
+    const uuidBytes = this.buffer.subarray(this.readOffset, this.readOffset + 16)
+    this.readOffset += 16
+    const hex = Array.from(uuidBytes)
+      .map(byte => byte.toString(16).padStart(2, '0'))
+      .join('')
+    return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`
+  }
+
   // Varints
   // Write a signed varint
   writeVarInt (value) {

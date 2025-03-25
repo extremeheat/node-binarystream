@@ -306,6 +306,38 @@ class ByteStream {
     return value
   }
 
+  // Write a UUID as big endian
+  writeUUID (uuid) {
+    this.resizeForWriteIfNeeded(16) // UUID is always 16 bytes
+
+    let buffer
+    if (Buffer.isBuffer(uuid)) {
+      if (uuid.length !== 16) throw new Error('UUID Buffer must be 16 bytes')
+      buffer = uuid
+    } else if (typeof uuid === 'string') {
+      const hex = uuid.replace(/-/g, '')
+      if (hex.length !== 32) {
+        throw new Error('Invalid UUID string format')
+      }
+      buffer = Buffer.from(hex, 'hex')
+    } else {
+      throw new Error('UUID must be a string or Buffer')
+    }
+    buffer.copy(this.buffer, this.writeOffset)
+    this.writeOffset += 16
+  }
+
+  // Read a UUID and return it as a string with dashes
+  readUUID () {
+    if (this.readOffset + 16 > this.buffer.length) {
+      throw new Error('Not enough bytes to read UUID')
+    }
+    const uuidBytes = this.buffer.slice(this.readOffset, this.readOffset + 16)
+    this.readOffset += 16
+    const hex = uuidBytes.toString('hex')
+    return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`
+  }
+
   // Varints
 
   // Write a signed varint
