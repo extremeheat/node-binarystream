@@ -1,6 +1,6 @@
 {
   "name": "bytewriter",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Simple binary byte stream implementation with support for reading/writing numbers, strings, and varints (zigzag or unsigned) in both little and big endian encoding",
   "main": "src/index.js",
   "scripts": {
